@@ -10,4 +10,14 @@ export class PlayersService {
     // rank ASC = best player first
     return [...players].sort((a, b) => a.data.rank - b.data.rank);
   }
+
+  getPlayerById(id: number): Player {
+    const player = this.repo.findById(id);
+  
+    if (!player) {
+      throw new Error('Player not found');
+    }
+  
+    return player;
+  }
 }

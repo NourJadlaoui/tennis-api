@@ -1,9 +1,15 @@
 import { PlayersService } from "../services/players.service";
 
 export class PlayersController {
-  constructor(private readonly service = new PlayersService()) {}
+  constructor(
+    private readonly playersService: PlayersService,
+  ) {}
 
   getPlayers() {
-    return this.service.getAllPlayers();
+    return this.playersService.getAllPlayers();
+  }
+
+  getPlayerById(id: number) {
+    return this.playersService.getPlayerById(id);
   }
 }
