@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import { playersRoutes } from "./routes/players.routes";
+import { statsRoutes } from "./routes/stats.routes";
 
 export function buildApp() {
   const app = Fastify({
@@ -8,6 +9,7 @@ export function buildApp() {
 
   // Routes
   app.register(playersRoutes);
+  app.register(statsRoutes);
 
   // Health check
   app.get("/health", async () => {
