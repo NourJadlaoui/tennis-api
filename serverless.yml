@@ -1,0 +1,14 @@
+service: tennis-api
+
+provider:
+  name: aws
+  runtime: nodejs22.x
+  region: eu-west-3
+
+functions:
+  api:
+    handler: dist/lambda.handler
+    events:
+      - httpApi:
+          path: /{proxy+}
+          method: ANY
