@@ -70,7 +70,6 @@ describe("StatsService", () => {
 
     it("should call repository once", () => {
       service.getStats();
-
       expect(repo.findAll).toHaveBeenCalledTimes(1);
     });
 

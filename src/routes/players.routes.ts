@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { PlayersController } from "../controllers/players.controller";
 import { PlayersRepository } from "../repositories/players.repository";
 import { PlayersService } from "../services/players.service";
+import { CreatePlayerSchema } from "../validators/player.validator";
 
 export async function playersRoutes(app: FastifyInstance) {
   const repository = new PlayersRepository();
@@ -28,6 +29,28 @@ export async function playersRoutes(app: FastifyInstance) {
     } catch {
       return reply.status(404).send({
         message: "Player not found",
+      });
+    }
+  });
+
+  app.post("/players", async (request, reply) => {
+    try {
+      const parsed = CreatePlayerSchema.safeParse(request.body);
+      
+
+      if (!parsed.success) {
+        return reply.status(400).send({
+          message: "Validation error",
+          errors: parsed.error.flatten(),
+        });
+      }
+
+      const newPlayer = controller.createPlayer(parsed.data);
+
+      return reply.status(201).send(newPlayer);
+    } catch (err) {
+      return reply.status(500).send({
+        message: "Internal server error",
       });
     }
   });
